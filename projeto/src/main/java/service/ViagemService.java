@@ -47,7 +47,7 @@ public class ViagemService {
 
     public Viagem reservaViagem(Viagem viagem) {
         if (viagem.getId()!= null) {
-            throw new RuntimeException("Viagem já existe");
+            throw new RuntimeException("A viagem já existe");
         }
         viagem.setStatus("RESERVADA");
         return viagemRepository.save(viagem);
