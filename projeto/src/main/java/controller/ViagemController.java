@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.validation.Valid;
 import model.Viagem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class ViagemController {
     private ViagemService viagemService;
 
     @PostMapping
-    public ResponseEntity<Viagem> createViagem(@RequestBody Viagem viagem) {
+    public ResponseEntity<Viagem> createViagem(@Valid @RequestBody Viagem viagem) {
         Viagem newViagem = viagemService.save(viagem);
         return new ResponseEntity<>(newViagem, HttpStatus.CREATED);
     }
@@ -30,7 +31,7 @@ public class ViagemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Viagem> getViagemById(@PathVariable Long id) {
+    public ResponseEntity<Viagem> getViagemById(@Valid @PathVariable Long id) {
         Viagem viagem = viagemService.findById(id);
         if (viagem == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -39,19 +40,19 @@ public class ViagemController {
     }
 
     @GetMapping("/destino/{destino}")
-    public ResponseEntity<List<Viagem>> getViagensByDestino(@PathVariable String destino) {
+    public ResponseEntity<List<Viagem>> getViagensByDestino(@Valid @PathVariable String destino) {
         List<Viagem> viagens = viagemService.findByDestino(destino);
         return new ResponseEntity<>(viagens, HttpStatus.OK);
     }
 
     @GetMapping("/data-inicio/{dataInicio}")
-    public ResponseEntity<List<Viagem>> getViagensByDataInicio(@PathVariable String dataInicio) {
+    public ResponseEntity<List<Viagem>> getViagensByDataInicio(@Valid @PathVariable String dataInicio) {
         List<Viagem> viagens = viagemService.findByDataInicio(dataInicio);
         return new ResponseEntity<>(viagens, HttpStatus.OK);
     }
 
     @GetMapping("/preco/{preco}")
-    public ResponseEntity<List<Viagem>> getViagensByPreco(@PathVariable Double preco) {
+    public ResponseEntity<List<Viagem>> getViagensByPreco(@Valid @PathVariable Double preco) {
         List<Viagem> viagens = viagemService.findByPreco(preco);
         return new ResponseEntity<>(viagens, HttpStatus.OK);
     }

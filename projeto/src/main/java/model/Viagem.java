@@ -15,8 +15,9 @@ public class Viagem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String destino;
+    @ManyToOne
+    @JoinColumn(name = "destino_id", nullable = false)
+    private Destino destino; // Ajustando para usar a entidade Destino
 
     @Column(nullable = false)
     private String dataInicio;
