@@ -17,7 +17,7 @@ public class Viagem {
 
     @ManyToOne
     @JoinColumn(name = "destino_id", nullable = false)
-    private Destino destino; // Ajustando para usar a entidade Destino
+    private Destino destino;
 
     @Column(nullable = false)
     private String dataInicio;

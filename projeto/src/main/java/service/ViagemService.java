@@ -10,27 +10,38 @@ import java.util.List;
 @Service
 public class ViagemService {
 
+    private final ViagemRepository viagemRepository;
+
     @Autowired
-    private ViagemRepository viagemRepository;
-
-    public List<Viagem> findAll() {
-        return viagemRepository.findAll();
-    }
-
-    public Viagem findById(Long id) {
-        return viagemRepository.findById(id).orElse(null);
+    public ViagemService(ViagemRepository viagemRepository) {
+        this.viagemRepository = viagemRepository;
     }
 
     public Viagem save(Viagem viagem) {
         return viagemRepository.save(viagem);
     }
 
+    public List<Viagem> findAll() {
+        return viagemRepository.findAll();
+    }
+
+    public Viagem update(Long id, Viagem viagemAtualizada) {
+        Viagem viagemExistente = findById(id);
+        if (viagemExistente != null) {
+            viagemExistente.setDestino(viagemAtualizada.getDestino());
+            viagemExistente.setDataInicio(viagemAtualizada.getDataInicio());
+            viagemExistente.setDataFim(viagemAtualizada.getDataFim());
+            return viagemRepository.save(viagemExistente);
+        }
+        return null;
+    }
+
     public void deleteById(Long id) {
         viagemRepository.deleteById(id);
     }
 
-    public List<Viagem> findByUsuarioId(Long usuarioId) {
-        return viagemRepository.findByUsuarioId(usuarioId);
+    public Viagem findById(Long id) {
+        return viagemRepository.findById(id).orElse(null);
     }
 
     public List<Viagem> findByDestino(String destino) {
@@ -46,10 +57,11 @@ public class ViagemService {
     }
 
     public Viagem reservaViagem(Viagem viagem) {
-        if (viagem.getId()!= null) {
-            throw new RuntimeException("A viagem já existe");
-        }
-        viagem.setStatus("RESERVADA");
+        // Lógica para reservar a viagem
         return viagemRepository.save(viagem);
+    }
+
+    public List<Viagem> findByUsuarioId(Long usuarioId) {
+        return viagemRepository.findByUsuarioId(usuarioId);
     }
 }

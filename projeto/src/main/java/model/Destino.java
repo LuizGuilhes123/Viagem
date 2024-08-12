@@ -3,11 +3,12 @@ package model;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Table(name = "Destino")
 public class Destino {
 
     @Id
